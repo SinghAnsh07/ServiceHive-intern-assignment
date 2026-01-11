@@ -13,10 +13,10 @@ const generateToken = (id) => {
 // @access  Public
 export const register = async (req, res) => {
     try {
-        const { name, email, password } = req.body;
+        const { name, email, password, role } = req.body;
 
         // Validation
-        if (!name || !email || !password) {
+        if (!name || !email || !password || !role) {
             return res.status(400).json({
                 success: false,
                 message: 'Please provide all fields'
@@ -36,7 +36,8 @@ export const register = async (req, res) => {
         const user = await User.create({
             name,
             email,
-            password
+            password,
+            role
         });
 
         if (user) {
@@ -54,9 +55,10 @@ export const register = async (req, res) => {
             res.status(201).json({
                 success: true,
                 user: {
-                    id: user._id,
+                    _id: user._id,
                     name: user.name,
-                    email: user.email
+                    email: user.email,
+                    role: user.role
                 }
             });
         } else {
@@ -107,9 +109,10 @@ export const login = async (req, res) => {
             res.json({
                 success: true,
                 user: {
-                    id: user._id,
+                    _id: user._id,
                     name: user.name,
-                    email: user.email
+                    email: user.email,
+                    role: user.role
                 }
             });
         } else {
@@ -156,9 +159,10 @@ export const logout = async (req, res) => {
 export const getMe = async (req, res) => {
     try {
         const user = {
-            id: req.user._id,
+            _id: req.user._id,
             name: req.user.name,
-            email: req.user.email
+            email: req.user.email,
+            role: req.user.role
         };
 
         res.json({
