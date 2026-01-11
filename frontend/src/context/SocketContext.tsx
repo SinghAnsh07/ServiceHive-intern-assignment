@@ -39,7 +39,7 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({ childr
             newSocket.on('connect', () => {
                 console.log('Connected to Socket.io server');
                 // Join with user ID
-                newSocket.emit('join', user.id);
+                newSocket.emit('join', user._id);
             });
 
             newSocket.on('notification', (notification: Notification) => {

@@ -8,13 +8,14 @@ const CreateGig: React.FC = () => {
         title: '',
         description: '',
         budget: '',
+        category: '',
     });
 
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const { isLoading, error } = useAppSelector((state) => state.gigs);
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         setFormData({
             ...formData,
             [e.target.name]: e.target.value,
@@ -27,6 +28,7 @@ const CreateGig: React.FC = () => {
         const gigData = {
             ...formData,
             budget: parseFloat(formData.budget),
+            category: formData.category,
         };
 
         const result = await dispatch(createGig(gigData));
@@ -64,6 +66,28 @@ const CreateGig: React.FC = () => {
                             className="input"
                             placeholder="e.g., Build a React Website"
                         />
+                    </div>
+
+                    <div>
+                        <label htmlFor="category" className="block text-sm font-medium text-gray-700 mb-1">
+                            Category *
+                        </label>
+                        <select
+                            id="category"
+                            name="category"
+                            value={formData.category}
+                            onChange={handleChange}
+                            required
+                            className="input"
+                        >
+                            <option value="" disabled>Select a category</option>
+                            <option value="Web Development">Web Development</option>
+                            <option value="Mobile Development">Mobile Development</option>
+                            <option value="Data Science">Data Science</option>
+                            <option value="Design">Design</option>
+                            <option value="Marketing">Marketing</option>
+                            <option value="Writing">Writing</option>
+                        </select>
                     </div>
 
                     <div>
